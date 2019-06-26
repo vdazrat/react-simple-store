@@ -1,25 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import createStore from './simpleStore/';
+
+import store from './store';
+const [ Provider, withStore ] = createStore(store);
+
+const Person = ({ person, personActions }) => {
+  const onClick = () => {
+    console.log(personActions.setName);
+    personActions.setName('asdsd');
+  };
+  return (<div onClick={onClick}>{person.name}</div>);
+};
+
+const WrappedPerson = withStore(
+  store => ({ person: store.person }),
+  actions => ({ personActions: actions.person }),
+)(Person);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider>
+        <WrappedPerson />
+    </Provider>
   );
 }
 

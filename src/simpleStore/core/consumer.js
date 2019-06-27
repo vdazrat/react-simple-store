@@ -6,8 +6,8 @@ const setUpConsumer = StoreContext => (storeSelector, actionsSelector) => Wrappe
             {
                 contextProps => {
                     const { store, actions } = contextProps;
-                    const storeProps = storeSelector(store);
-                    const actionProps = actionsSelector(actions);
+                    const storeProps = storeSelector && storeSelector(store);
+                    const actionProps = actionsSelector && actionsSelector(actions);
 
                     return <WrappedComponent {...props} {...storeProps} {...actionProps} />
                 }
